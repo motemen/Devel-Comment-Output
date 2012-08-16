@@ -118,11 +118,11 @@ __END__
 
 =head1 NAME
 
-Devel::Comment::Output - embed output to your script after execution
+Devel::Comment::Output - Comment program output to your script after execution
 
 =head1 SYNOPSIS
 
-write your script:
+Write your script:
 
   use Devel::Comment::Output;
   use Data::Dumper;
@@ -150,7 +150,7 @@ embeds the outputs to the script.
 
   use Devel::Comment::Output;
 
-is equivalent to
+is equivalent to below:
 
   use Devel::Comment::Output (
       handle => \*STDOUT, # Handle to capture
@@ -161,8 +161,6 @@ is equivalent to
 =head1 AUTHOR
 
 motemen E<lt>motemen@gmail.comE<gt>
-
-=head1 SEE ALSO
 
 =head1 LICENSE
 
