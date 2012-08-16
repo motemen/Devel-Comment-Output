@@ -126,7 +126,7 @@ Write your script:
 
   use Devel::Comment::Output;
   use Data::Dumper;
-  
+
   print 1 + 2;
   print Dumper { a => 1 };
 
@@ -134,7 +134,7 @@ after running, comments are added to the script like:
 
   # use Devel::Comment::Output;
   use Data::Dumper;
-  
+
   print 1 + 2; # => 3;
   print Dumper { a => 1 };
   # $VAR1 = {
