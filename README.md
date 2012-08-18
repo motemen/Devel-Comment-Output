@@ -37,6 +37,7 @@ is equivalent to below:
     use Devel::Comment::Output (
         handle => \*STDOUT, # Handle to capture
         file => __FILE__,   # File to rewrite
+        inline => 1,        # Allow inline comment
         prefix => '=> '     # Inline comment prefix
     );
 
