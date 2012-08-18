@@ -19,6 +19,7 @@ sub import {
         handle => \*STDOUT,
         file   => $file,
         prefix => $Prefix,
+        inline => 1,
         %args,
     );
     $self->setup;
@@ -66,7 +67,7 @@ sub write {
         $in[$i] =~ s/^(use \Q$class\E\b)/# $1/;
 
         my @results = split /\n/, join '', @{ $self->{results}->{$i+1} || [] };
-        if (@results == 1) {
+        if (@results == 1 && $self->{inline}) {
             $in[$i] =~ s/$/ # $self->{prefix}$results[0]/;
             push @out, $in[$i];
         } else {
@@ -155,6 +156,7 @@ is equivalent to below:
   use Devel::Comment::Output (
       handle => \*STDOUT, # Handle to capture
       file => __FILE__,   # File to rewrite
+      inline => 1,        # Allow inline comment
       prefix => '=> '     # Inline comment prefix
   );
 
