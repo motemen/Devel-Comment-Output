@@ -12,6 +12,7 @@ tests 't/*.t';
 author_tests 'xt';
 
 test_requires 'Test::More';
+test_requires 'Test::Requires';
 test_requires 'File::Temp';
 
 auto_set_repository;

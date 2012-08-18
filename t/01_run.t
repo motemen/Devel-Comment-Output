@@ -1,6 +1,7 @@
 use strict;
 use Test::More tests => 2;
 use File::Temp;
+use Test::Requires qw(IPC::Run);
 
 my $IN = <<'__IN__';
 use strict;
@@ -28,8 +29,12 @@ my $temp = File::Temp->new;
 print $temp $IN;
 close $temp;
 
-open (my $pipe, '-|') || exec $^X, ( map "-I$_", @INC ), $temp->filename;
-is do { local $/; <$pipe> }, "3\nfoo\nbar";
+IPC::Run::run(
+    [ $^X, ( map "-I$_", @INC ), $temp->filename ],
+    '>' => \my $output
+);
+
+is $output, "3\nfoo\nbar☁";
 
 open my $fh, '<', $temp->filename;
 
