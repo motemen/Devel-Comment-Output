@@ -55,6 +55,7 @@ sub write {
     my $self = shift;
     my $class = ref $self;
 
+    local *{$self->{handle}};
     local $/ = "\n";
 
     my @in = do {
@@ -92,15 +93,21 @@ use Tie::Handle;
 use parent -norequire => 'Tie::StdHandle';
 
 sub PRINT {
-    my $self = shift;
+    my ($self, @args) = @_;
+
+    no warnings;
 
     my $dco = Devel::Comment::Output->from_handle($self);
-    print { $dco->{original_handle} } @_;
+    print { $dco->{original_handle} } @args;
+
+    foreach (@args) {
+        utf8::encode($_) if utf8::is_utf8($_);
+    }
 
     my $depth = 0;
     while (my ($pkg, $file, $line) = caller($depth++)) {
         if ($file eq $dco->{file}) {
-            push @{ $dco->{results}->{$line} ||= [] }, @_;
+            push @{ $dco->{results}->{$line} ||= [] }, @args;
             return;
         }
     }
